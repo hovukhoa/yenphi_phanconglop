@@ -32,10 +32,45 @@ export const MOCK_STUDENTS: string[] = ['Nguyễn Văn A', 'Trần Thị B', 'L�
 // Dữ liệu mẫu nhiệm vụ (nếu không kết nối được sheet MANAGE)
 export const MOCK_TASKS_DATA: string[] = ['Quét lớp (Mock)', 'Lau bảng (Mock)', 'Kê bàn ghế (Mock)'];
 
+// Dữ liệu mẫu cho JOBS2 (Nhiệm vụ cố định)
+export const MOCK_FIXED_ROLES: string[] = [
+  'Lớp trưởng (LT – Lê Vy)',
+  'Lớp phó học tập (LP – Kim Anh)',
+  'Tổ trưởng tổ 1 (TT1 – Quân)',
+  'Tổ phó tổ 1 (TP1 – Sơn)',
+  'Tổ trưởng tổ 2 (TT2 – Trường)',
+  'Tổ phó tổ 2 (TP2 – Hân)',
+  'Tổ trưởng tổ 3 (TT3 – Chí Anh)',
+  'Tổ phó tổ 3 (TP3 – Dũng)'
+];
+
 // Dữ liệu mẫu mô tả nhiệm vụ
 export const MOCK_TASK_DESCRIPTIONS: TaskDescriptions = {
   'Quét lớp': ['Quét sạch bụi sàn nhà', 'Hốt rác đổ đúng nơi quy định', 'Sắp xếp lại chổi sau khi quét'],
   'Lau bảng': ['Giặt khăn lau sạch sẽ', 'Lau bảng sạch phấn', 'Thay nước chậu giặt khăn'],
   'Kê bàn ghế': ['Kê lại bàn ghế cho thẳng hàng', 'Nhặt rác trong ngăn bàn'],
-  'Trực nhật': ['Kiểm tra điện, quạt trước khi ra về', 'Đóng cửa sổ nếu trời mưa']
+  'Trực nhật': ['Kiểm tra điện, quạt trước khi ra về', 'Đóng cửa sổ nếu trời mưa'],
+  'Lớp trưởng': ['Quản lý chung', 'Báo cáo sĩ số đầu giờ'],
+  'Tổ trưởng': ['Thu bài tập tổ viên', 'Nhắc nhở trật tự']
+};
+
+// BẢNG ÁNH XẠ ID TRÊN SVG -> TÊN NHIỆM VỤ
+export const SVG_ID_MAPPING: Record<string, string> = {
+  'TRUC BANG': 'Trực bảng',
+  'GOC SANG TAO': 'Góc sáng tạo',
+  'BAO SI SO': 'Báo sĩ số',
+  'QUAN LY TV': 'Quản lí TV',
+  'GOC THU VIEN': 'Góc thư viện',
+  'CUP CAU DAO': 'Cúp cầu dao',
+  'CHAM SOC CAY': 'Chăm sóc cây',
+  'DO RAC': 'Đổ rác',
+  'TRUC NHAT': 'Trực nhật',
+  'LT': 'Lớp trưởng (LT – Lê Vy)',
+  'LP': 'Lớp phó học tập (LP – Kim Anh)',
+  'TT1': 'Tổ trưởng tổ 1 (TT1 – Quân)',
+  'TP1': 'Tổ phó tổ 1 (TP1 – Sơn)',
+  'TT2': 'Tổ trưởng tổ 2 (TT2 – Trường)',
+  'TP2': 'Tổ phó tổ 2 (TP2 – Hân)',
+  'TT3': 'Tổ trưởng tổ 3 (TT3 – Chí Anh)',
+  'TP3': 'Tổ phó tổ 3 (TP3 – Dũng)'
 };

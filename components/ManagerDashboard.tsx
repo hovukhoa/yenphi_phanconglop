@@ -108,7 +108,7 @@ export const ManagerDashboard: React.FC<ManagerDashboardProps> = ({ onBack }) =>
     setIsProcessing(true);
 
     setTimeout(() => {
-      const shuffledNames = shuffleArray(allStudents);
+      const shuffledNames = shuffleArray<string>(allStudents);
       const studentObjects: Student[] = shuffledNames.map((name, index) => ({
         id: `s-${index}`,
         name

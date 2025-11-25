@@ -1,5 +1,5 @@
 
-import { APP_CONFIG, MOCK_STUDENTS, MOCK_TASKS_DATA, MOCK_TASK_DESCRIPTIONS } from '../constants';
+import { APP_CONFIG, MOCK_STUDENTS, MOCK_TASKS_DATA, MOCK_TASK_DESCRIPTIONS, MOCK_FIXED_ROLES } from '../constants';
 import { SaveAssignmentRequest, LatestAssignmentResponse, TaskDescriptions } from '../types';
 
 /**
@@ -55,7 +55,7 @@ export const fetchStudentsFromSheet = async (): Promise<string[]> => {
 };
 
 /**
- * Lấy danh sách nhiệm vụ từ Sheet MANAGE
+ * Lấy danh sách nhiệm vụ từ Sheet MANAGE (JOBS)
  */
 export const fetchTasksFromSheet = async (): Promise<string[]> => {
   // 1. Iframe mode
@@ -79,6 +79,30 @@ export const fetchTasksFromSheet = async (): Promise<string[]> => {
 };
 
 /**
+ * Lấy danh sách vai trò cố định từ Sheet MANAGE (JOBS2)
+ */
+export const fetchFixedRoles = async (): Promise<string[]> => {
+  // 1. Iframe mode
+  if (typeof window !== 'undefined' && window.google && window.google.script) {
+    return new Promise((resolve, reject) => {
+      window.google.script.run
+        .withSuccessHandler(resolve)
+        .withFailureHandler(reject)
+        .getFixedRoles();
+    });
+  }
+
+  // 2. Fetch API mode
+  try {
+    const data = await fetchData('getFixedRoles');
+    return Array.isArray(data) ? data : [];
+  } catch (e) {
+    console.warn("Using mock fixed roles.");
+    return new Promise(resolve => setTimeout(() => resolve(MOCK_FIXED_ROLES), 800));
+  }
+};
+
+/**
  * Lấy phân công mới nhất từ Sheet PHANCONG
  */
 export const fetchLatestAssignment = async (): Promise<LatestAssignmentResponse | null> => {
@@ -97,17 +121,9 @@ export const fetchLatestAssignment = async (): Promise<LatestAssignmentResponse 
       const data = await fetchData('getLatestAssignment');
       return data;
     } catch (e) {
-      console.warn("Using mock latest assignment for dev.");
-      // Mock data for development when API fails
-      return new Promise(resolve => setTimeout(() => resolve({
-        startDate: "01/01/2024",
-        endDate: "07/01/2024",
-        createdAt: new Date().toISOString(),
-        tasks: [
-          { taskName: "Quét lớp", students: ["Nguyễn Văn A", "Trần Thị B"] },
-          { taskName: "Lau bảng", students: ["Lê Văn C"] }
-        ]
-      }), 800));
+      console.error("Lỗi lấy dữ liệu phân công:", e);
+      // QUAN TRỌNG: Không dùng mock data nữa để đảm bảo tính chính xác
+      throw new Error("Không thể kết nối lấy dữ liệu phân công.");
     }
   };
 

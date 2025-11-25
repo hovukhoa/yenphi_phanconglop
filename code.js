@@ -7,9 +7,14 @@ function doGet(e) {
     return getStudentListAsJSON();
   }
   
-  // API lấy danh sách nhiệm vụ
+  // API lấy danh sách nhiệm vụ (JOBS)
   if (action === 'getTasks') {
     return getTaskListAsJSON();
+  }
+
+  // API lấy danh sách vai trò cố định (JOBS2)
+  if (action === 'getFixedRoles') {
+    return getFixedRolesAsJSON();
   }
 
   // API lấy phân công mới nhất
@@ -94,6 +99,30 @@ function getTaskList() {
     }
   }
   return tasks;
+}
+
+function getFixedRoles() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName('MANAGE');
+  if (!sheet) return [];
+  
+  const data = sheet.getDataRange().getValues();
+  if (data.length < 2) return [];
+  
+  // Tìm cột JOBS2
+  const headers = data[0];
+  const jobColIndex = headers.indexOf('JOBS2');
+  
+  if (jobColIndex === -1) return [];
+  
+  const roles = [];
+  for (let i = 1; i < data.length; i++) {
+    const role = data[i][jobColIndex];
+    if (role && role.toString().trim() !== '') {
+      roles.push(role.toString().trim());
+    }
+  }
+  return roles;
 }
 
 function saveAssignmentData(data) {
@@ -198,6 +227,12 @@ function getStudentListAsJSON() {
 function getTaskListAsJSON() {
   const tasks = getTaskList();
   return ContentService.createTextOutput(JSON.stringify(tasks))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function getFixedRolesAsJSON() {
+  const roles = getFixedRoles();
+  return ContentService.createTextOutput(JSON.stringify(roles))
     .setMimeType(ContentService.MimeType.JSON);
 }
 

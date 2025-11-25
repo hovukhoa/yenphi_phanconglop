@@ -1,7 +1,8 @@
+
 /**
  * Fisher-Yates shuffle algorithm to randomize array elements.
  */
-export const shuffleArray = <T,>(array: T[]): T[] => {
+export const shuffleArray = <T>(array: T[]): T[] => {
   const newArray = [...array];
   for (let i = newArray.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
