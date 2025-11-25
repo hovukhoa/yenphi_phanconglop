@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Phân Công Nhiệm Vụ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#2563eb',
+              secondary: '#475569',
+            },
+            screens: {
+              'print': {'raw': 'print'},
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      @media print {
+        @page { size: A4; margin: 2cm; }
+        body { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: white !important; }
+        .no-print { display: none !important; }
+        .print-only { display: block !important; }
+        #root { width: 100%; }
+      }
+      .print-only { display: none; }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-gray-50 text-gray-900 antialiased">
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
