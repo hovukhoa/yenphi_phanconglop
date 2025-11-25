@@ -9,7 +9,8 @@ const fetchData = async (action: string): Promise<any> => {
   if (APP_CONFIG.DEPLOYMENT_URL && APP_CONFIG.DEPLOYMENT_URL.includes("script.google.com")) {
     try {
       const separator = APP_CONFIG.DEPLOYMENT_URL.includes('?') ? '&' : '?';
-      const url = `${APP_CONFIG.DEPLOYMENT_URL}${separator}action=${action}`;
+      // Thêm tham số t=${Date.now()} để tránh cache trình duyệt, luôn lấy dữ liệu mới
+      const url = `${APP_CONFIG.DEPLOYMENT_URL}${separator}action=${action}&t=${Date.now()}`;
       
       const response = await fetch(url, {
         method: 'GET',
