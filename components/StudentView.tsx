@@ -21,6 +21,7 @@ export const StudentView: React.FC<StudentViewProps> = ({ onBack }) => {
   // Modal State
   const [selectedTask, setSelectedTask] = useState<string | null>(null);
   const [selectedTaskDesc, setSelectedTaskDesc] = useState<string[]>([]);
+  const [selectedTaskStudents, setSelectedTaskStudents] = useState<string[]>([]);
 
   useEffect(() => {
     const loadData = async () => {
@@ -85,8 +86,21 @@ export const StudentView: React.FC<StudentViewProps> = ({ onBack }) => {
   };
 
   const handleOpenDescription = (taskName: string) => {
+    // 1. Lấy mô tả
     const desc = getDescriptionsForTask(taskName);
     setSelectedTaskDesc(desc);
+
+    // 2. Tìm danh sách học sinh thực hiện (cho nhiệm vụ ngẫu nhiên)
+    let students: string[] = [];
+    if (data && data.tasks) {
+        // Tìm nhiệm vụ trong danh sách phân công
+        const foundTask = data.tasks.find(t => t.taskName === taskName);
+        if (foundTask) {
+            students = foundTask.students;
+        }
+    }
+    setSelectedTaskStudents(students);
+
     setSelectedTask(taskName);
   };
 
@@ -247,6 +261,7 @@ export const StudentView: React.FC<StudentViewProps> = ({ onBack }) => {
         onClose={() => setSelectedTask(null)}
         taskName={selectedTask || ''}
         descriptions={selectedTaskDesc}
+        assignedStudents={selectedTaskStudents}
       />
     </div>
   );

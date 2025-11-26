@@ -1,15 +1,16 @@
 
 import React from 'react';
-import { X, CheckCircle2, ListChecks } from 'lucide-react';
+import { X, CheckCircle2, ListChecks, Users, User } from 'lucide-react';
 
 interface TaskDescriptionModalProps {
   isOpen: boolean;
   onClose: () => void;
   taskName: string;
   descriptions: string[];
+  assignedStudents?: string[];
 }
 
-export const TaskDescriptionModal: React.FC<TaskDescriptionModalProps> = ({ isOpen, onClose, taskName, descriptions }) => {
+export const TaskDescriptionModal: React.FC<TaskDescriptionModalProps> = ({ isOpen, onClose, taskName, descriptions, assignedStudents }) => {
   if (!isOpen) return null;
 
   return (
@@ -21,9 +22,9 @@ export const TaskDescriptionModal: React.FC<TaskDescriptionModalProps> = ({ isOp
       />
       
       {/* Modal Content */}
-      <div className="relative bg-white w-full max-w-md rounded-2xl shadow-2xl transform transition-all scale-100 overflow-hidden">
+      <div className="relative bg-white w-full max-w-md rounded-2xl shadow-2xl transform transition-all scale-100 overflow-hidden max-h-[85vh] flex flex-col">
         {/* Header */}
-        <div className="bg-blue-600 px-6 py-4 flex items-center justify-between">
+        <div className="bg-blue-600 px-6 py-4 flex items-center justify-between shrink-0">
             <h3 className="text-xl font-bold text-white flex items-center gap-2">
                 <ListChecks className="w-6 h-6" />
                 {taskName}
@@ -36,8 +37,27 @@ export const TaskDescriptionModal: React.FC<TaskDescriptionModalProps> = ({ isOp
             </button>
         </div>
 
-        {/* Body */}
-        <div className="p-6">
+        {/* Body - Scrollable */}
+        <div className="p-6 overflow-y-auto">
+            
+            {/* Display Assigned Students if available */}
+            {assignedStudents && assignedStudents.length > 0 && (
+                <div className="mb-6 bg-blue-50 border border-blue-100 rounded-xl p-4">
+                    <h4 className="text-sm font-bold text-blue-800 uppercase tracking-wide mb-3 flex items-center gap-2">
+                        <Users className="w-4 h-4" />
+                        Người thực hiện
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                        {assignedStudents.map((student, idx) => (
+                            <div key={idx} className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-full border border-blue-200 text-blue-900 shadow-sm">
+                                <User className="w-4 h-4 text-blue-500" />
+                                <span className="font-semibold text-sm">{student}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
             <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">
                 Mô tả chi tiết công việc
             </h4>
@@ -59,7 +79,7 @@ export const TaskDescriptionModal: React.FC<TaskDescriptionModalProps> = ({ isOp
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 bg-gray-50 border-t border-gray-100 flex justify-end">
+        <div className="px-6 py-4 bg-gray-50 border-t border-gray-100 flex justify-end shrink-0">
             <button 
                 onClick={onClose}
                 className="px-5 py-2 bg-white border border-gray-300 text-gray-700 font-semibold rounded-xl hover:bg-gray-100 transition-colors shadow-sm"
